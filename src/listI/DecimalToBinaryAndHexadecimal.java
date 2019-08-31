@@ -1,3 +1,4 @@
+package listI;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,6 @@ public class DecimalToBinaryAndHexadecimal extends JFrame {
 		this.setVisible(true);
 		int n1 = 100;
 		int n2 = 16;
-		System.out.println(n1/n2);
 	}
 	
 	private class Listener implements ActionListener {
