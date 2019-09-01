@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Calculator extends JFrame {
-
+	private static JFrame instance = null; 
 	private JButton sumButton = new JButton("+");
 	private JButton subtractionButton = new JButton("-");
 	private JButton multiplicationButton = new JButton("*");
@@ -21,7 +21,7 @@ public class Calculator extends JFrame {
 	private JTextField resultField = new JTextField();
 	private Listener listener = new Listener();
 	
-	public Calculator() {
+	private Calculator() {
 		GridLayout grid = new GridLayout(3,4);
 		this.setLayout(grid);
 		this.add(number1Label);
@@ -43,6 +43,13 @@ public class Calculator extends JFrame {
 		this.setTitle("Calculator");
 		this.pack();
 		this.setVisible(true);
+	}
+	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new Calculator();
+		instance.setVisible(true);
+		return instance;
 	}
 	
 	private class Listener implements ActionListener {

@@ -10,8 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import sun.security.jca.GetInstance;
+
 public class HotOrCold extends JFrame {
-	
+	private static JFrame instance = null;
 	private JLabel guessLabel = new JLabel("Guess: ");
 	private JTextField guessField = new JTextField();
 	private JButton guessButton = new JButton("Try");
@@ -20,7 +22,7 @@ public class HotOrCold extends JFrame {
 	private int actualGuess;
 	private Listener listener = new Listener();
 	
-	public HotOrCold() {
+	private HotOrCold() {
 		this.resetState();
 		GridLayout grid = new GridLayout(2, 2);
 		this.setLayout(grid);
@@ -33,6 +35,13 @@ public class HotOrCold extends JFrame {
 		this.setTitle("Hot Or Cold");
 		this.setSize(350, 150);
 		this.setVisible(true);
+	}
+	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new HotOrCold();
+		instance.setVisible(true);
+		return instance;
 	}
 	
 	private class Listener implements ActionListener {

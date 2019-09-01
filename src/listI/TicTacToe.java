@@ -9,12 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class TicTacToe extends JFrame {
+	private static JFrame instance = null;
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
 	private Listener listener = new Listener();
 	private int turn;
 	private final int MAX_TURN = 9;
 	
-	public TicTacToe() {
+	private TicTacToe() {
 		GridLayout grid = new GridLayout(3, 3);
 		this.setLayout(grid);
 		
@@ -26,18 +27,23 @@ public class TicTacToe extends JFrame {
 		}
 		
 		this.pack();
-		this.setVisible(true);
 		this.setSize(300, 300);
 		this.setResizable(false);
 		this.setTitle("Tic Tac Toe");
 		this.initialState();
 	}
 	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new TicTacToe();
+		instance.setVisible(true);
+		return instance;
+	}
+	
 	private void initialState() {
 		turn = 1;
-		for(JButton button : buttons) {
+		for(JButton button : buttons)
 			button.setText("");
-		}
 	}
 	
 	private String getTurnSymbol() {
@@ -61,26 +67,23 @@ public class TicTacToe extends JFrame {
 		return b1.equals(b2) && b2.equals(b3) && !b1.isEmpty();
 	}
 	
-	private void finished() {
-		if(isWin()) {
-			JOptionPane.showMessageDialog(null, "FINISHED! \"" + getTurnSymbol() +"\" WIN");
-			initialState();
-		} else if(turn == MAX_TURN) {
-			JOptionPane.showMessageDialog(null, "FINISHED! Draw");
-			initialState();
-		} else {
-			turn++;
+	private class Listener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			for(JButton button : buttons)
+				if(e.getSource() == button && button.getText().isEmpty()) {
+					turn++;
+					button.setText(getTurnSymbol());
+					verifyFinished();
+				}
 		}
 	}
 	
-	private class Listener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			for(JButton button : buttons) {
-				if(e.getSource() == button) {
-					button.setText(getTurnSymbol());
-				}
-			}
-			finished();
-		}
+	private void verifyFinished() {
+		if(isWin())
+			JOptionPane.showMessageDialog(null, "FINISHED! \"" + getTurnSymbol() +"\" WIN");
+		else if(turn > MAX_TURN)
+			JOptionPane.showMessageDialog(null, "FINISHED! Draw");
+		if(isWin() || turn > MAX_TURN)
+			initialState();
 	}
 }

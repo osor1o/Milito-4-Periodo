@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class DecimalToBinaryAndHexadecimal extends JFrame {
-
+	private static JFrame instance = null;
 	private JLabel valueLabel = new JLabel("value: ");
 	private JLabel resultInHexadecimalLabel = new JLabel("hex: ");
 	private JLabel resultInBinaryLabel = new JLabel("bin: ");
@@ -16,7 +16,7 @@ public class DecimalToBinaryAndHexadecimal extends JFrame {
 	private JButton resultButton = new JButton("=");
 	private Listener listener = new Listener();
 	
-	public DecimalToBinaryAndHexadecimal() {
+	private DecimalToBinaryAndHexadecimal() {
 		GridLayout grid = new GridLayout(3, 2);
 		this.setLayout(grid);
 		
@@ -34,6 +34,13 @@ public class DecimalToBinaryAndHexadecimal extends JFrame {
 		this.setVisible(true);
 		int n1 = 100;
 		int n2 = 16;
+	}
+	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new DecimalToBinaryAndHexadecimal();
+		instance.setVisible(true);
+		return instance;
 	}
 	
 	private class Listener implements ActionListener {

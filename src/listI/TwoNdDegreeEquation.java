@@ -8,7 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import sun.security.jca.GetInstance.Instance;
+
 public class TwoNdDegreeEquation extends JFrame {
+	private static JFrame instance = null;
 	private JLabel aLabel = new JLabel("a");
 	private JLabel bLabel = new JLabel("b");
 	private JLabel cLabel = new JLabel("c");
@@ -19,7 +22,7 @@ public class TwoNdDegreeEquation extends JFrame {
 	private JTextField cField = new JTextField();
 	private Listener listener = new Listener();
 	
-	public TwoNdDegreeEquation() {
+	private TwoNdDegreeEquation() {
 		GridLayout grid = new GridLayout(4, 2);
 		this.setLayout(grid);
 		this.add(aLabel);
@@ -35,6 +38,13 @@ public class TwoNdDegreeEquation extends JFrame {
 		this.pack();
 		this.setTitle("2nd Degree Equation");
 		this.setVisible(true);
+	}
+	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new TwoNdDegreeEquation();
+		instance.setVisible(true);
+		return instance;
 	}
 	
 	private class Listener implements ActionListener {

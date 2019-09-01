@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class TemperatureConverter extends JFrame {
-
+	private static JFrame instance = null;
 	private JTextField valueField = new JTextField();
 	private JLabel valueLabel = new JLabel("Value: ");
 	private JLabel resultLabel = new JLabel("Result: ");
@@ -17,7 +17,7 @@ public class TemperatureConverter extends JFrame {
 	private JButton celsiusToFahrenheitButton = new JButton("Celsius To Fahrenheit");
 	private Listener listener = new Listener();
 	
-	public TemperatureConverter() {
+	private TemperatureConverter() {
 		GridLayout grid = new GridLayout(3,2);
 		this.setLayout(grid);
 		this.add(valueLabel);
@@ -31,6 +31,13 @@ public class TemperatureConverter extends JFrame {
 		this.pack();
 		this.setVisible(true);
 		this.setTitle("TemperatureConverter");
+	}
+	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new TemperatureConverter();
+		instance.setVisible(true);
+		return instance;
 	}
 
 	private class Listener implements ActionListener {

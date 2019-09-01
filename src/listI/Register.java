@@ -1,4 +1,4 @@
-package listII;
+package listI;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Register extends JFrame {
-
+	private static JFrame instance = null;
 	private JLabel nameLabel = new JLabel("Name");
 	private JLabel emailLabel = new JLabel("Email");
 	private JLabel phoneNumberLabel = new JLabel("Phone Number");
@@ -16,7 +16,7 @@ public class Register extends JFrame {
 	private JTextField phoneNumberField = new JTextField();
 	private JButton registerButton = new JButton("Register");
 	
-	public Register() {
+	private Register() {
 		GridLayout grid = new GridLayout(4, 2);
 		this.setLayout(grid);
 		
@@ -34,5 +34,11 @@ public class Register extends JFrame {
 		this.setVisible(true);
 	}
 	
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new Register();
+		instance.setVisible(true);
+		return instance;
+	}
 	
 }

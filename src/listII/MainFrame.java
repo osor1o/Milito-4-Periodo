@@ -2,6 +2,8 @@ package listII;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,13 +20,11 @@ public class MainFrame extends JFrame
 {
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu exercices = new JMenu("Exercices");
-	private JMenuItem temperatureConverter = new JMenuItem("Temperature Converter");
-	private JMenuItem twoNdDegreeEquation = new JMenuItem("2nd Degree Equation");
-	private JMenuItem decimalToBinaryAndHexadecimal = new JMenuItem("Decimal to Binary and Hexadecimal");
-	private JMenuItem hotOrCold = new JMenuItem("Hot Or Cold");
-	private JMenuItem ticTacToe = new JMenuItem("Tic Tac Toe");
-	private JMenuItem register = new JMenuItem("Register");
-	private JMenuItem exit = new JMenuItem("Exit");
+	private String[] menuItemsKeys = {
+		"Calculator", "Temperature Converter", "Two Nd Degree Equation", "Decimal To Binary And Hexadecimal",
+		"Hot Or Cold", "Tic Tac Toe", "Register", "Exit"
+	};
+	private HashMap<String, JMenuItem> menuItems = new HashMap<String, JMenuItem>();
 	private Listener listener = new Listener();
 	
 	public static void main(String[] agrs) {
@@ -35,53 +35,39 @@ public class MainFrame extends JFrame
 		this.setJMenuBar(menuBar);
 		menuBar.add(exercices);
 		
-		exercices.add(temperatureConverter);
-		exercices.add(twoNdDegreeEquation);
-		exercices.add(decimalToBinaryAndHexadecimal);
-		exercices.add(hotOrCold);
-		exercices.add(ticTacToe);
-		exercices.add(register);
-		exercices.add(exit);
-		
-		temperatureConverter.addActionListener(listener);
-		twoNdDegreeEquation.addActionListener(listener);
-		decimalToBinaryAndHexadecimal.addActionListener(listener);
-		hotOrCold.addActionListener(listener);
-		ticTacToe.addActionListener(listener);
-		register.addActionListener(listener);
-		exit.addActionListener(listener);
+		for(String key : menuItemsKeys) {
+			menuItems.put(key, new JMenuItem(key));
+			JMenuItem item = menuItems.get(key);
+			exercices.add(item);
+			item.addActionListener(listener);
+			
+		}
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setExtendedState(MAXIMIZED_BOTH);
+		this.setSize(300, 300);
 		this.setVisible(true);
+	}
+	
+	private void getInstance (String name) {
+		try {
+			if(name.equals("Exit"))
+				System.exit(0);
+			name = "listI." + name.replace(" ", "");
+			Class.forName(name).getMethod("getInstance").invoke(null, null);
+		} catch (
+				IllegalAccessException | ClassNotFoundException | IllegalArgumentException | 
+				NoSuchMethodException | SecurityException | InvocationTargetException e1
+			) {
+			e1.printStackTrace();
+		}
 	}
 	
 	private class Listener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == temperatureConverter) {
-				TemperatureConverter tpc = new TemperatureConverter();
-			}
-			if(e.getSource() == twoNdDegreeEquation) {
-				TwoNdDegreeEquation tnde = new TwoNdDegreeEquation();
-			}
-			if(e.getSource() == decimalToBinaryAndHexadecimal) {
-				DecimalToBinaryAndHexadecimal dtbah = new DecimalToBinaryAndHexadecimal();
-			}
-			if(e.getSource() == hotOrCold) {
-				HotOrCold hoc = new HotOrCold();
-			}
-			if(e.getSource() == ticTacToe) {
-				TicTacToe ttt = new TicTacToe();
-			}
-			if(e.getSource() == register) {
-				Register r = new Register();
-				System.out.println("1");
-			}
-			if(e.getSource() == exit) {
-				System.out.println("1");
-				System.exit(0);
-			}
+			for(String key : menuItemsKeys)
+				if(e.getSource() == menuItems.get(key))
+					getInstance(key);
 		}
-		
 	}
 }
