@@ -31,6 +31,7 @@ public class Register extends JFrame {
 		this.pack();
 		this.setTitle("Register");
 		this.setSize(300, 200);
+		this.setResizable(false);
 		this.setVisible(true);
 	}
 	

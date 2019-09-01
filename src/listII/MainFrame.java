@@ -1,5 +1,4 @@
 package listII;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
@@ -10,14 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import listI.DecimalToBinaryAndHexadecimal;
-import listI.HotOrCold;
-import listI.TemperatureConverter;
-import listI.TicTacToe;
-import listI.TwoNdDegreeEquation;
-
 public class MainFrame extends JFrame
 {
+	private static JFrame instance = null;
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu exercices = new JMenu("Exercices");
 	private String[] menuItemsKeys = {
@@ -28,10 +22,10 @@ public class MainFrame extends JFrame
 	private Listener listener = new Listener();
 	
 	public static void main(String[] agrs) {
-		MainFrame mf = new MainFrame();
+		MainFrame.getInstance();
 	}
 	
-	public MainFrame () {
+	private MainFrame () {
 		this.setJMenuBar(menuBar);
 		menuBar.add(exercices);
 		
@@ -49,7 +43,13 @@ public class MainFrame extends JFrame
 		this.setVisible(true);
 	}
 	
-	private void getInstance (String name) {
+	public static JFrame getInstance() {
+		if(instance == null)
+			instance = new MainFrame();
+		return instance;
+	}
+	
+	private void getItemsInstance(String name) {
 		try {
 			if(name.equals("Exit"))
 				System.exit(0);
@@ -67,7 +67,7 @@ public class MainFrame extends JFrame
 		public void actionPerformed(ActionEvent e) {
 			for(String key : menuItemsKeys)
 				if(e.getSource() == menuItems.get(key))
-					getInstance(key);
+					getItemsInstance(key);
 		}
 	}
 }

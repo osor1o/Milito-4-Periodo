@@ -37,6 +37,8 @@ public class TwoNdDegreeEquation extends JFrame {
 		
 		this.pack();
 		this.setTitle("2nd Degree Equation");
+		this.setResizable(false);
+		this.setSize(300, 250);
 		this.setVisible(true);
 	}
 	

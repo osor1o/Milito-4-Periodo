@@ -30,6 +30,8 @@ public class TemperatureConverter extends JFrame {
 		
 		this.pack();
 		this.setVisible(true);
+		this.setSize(400, 150);
+		this.setResizable(false);
 		this.setTitle("TemperatureConverter");
 	}
 	

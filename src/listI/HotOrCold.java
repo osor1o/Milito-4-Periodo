@@ -34,6 +34,7 @@ public class HotOrCold extends JFrame {
 		this.pack();
 		this.setTitle("Hot Or Cold");
 		this.setSize(350, 150);
+		this.setResizable(false);
 		this.setVisible(true);
 	}
 	

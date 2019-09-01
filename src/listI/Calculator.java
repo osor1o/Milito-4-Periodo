@@ -40,8 +40,10 @@ public class Calculator extends JFrame {
 		multiplicationButton.addActionListener(listener);
 		divisionButton.addActionListener(listener);
 		
-		this.setTitle("Calculator");
 		this.pack();
+		this.setTitle("Calculator");
+		this.setSize(400, 200);
+		this.setResizable(false);
 		this.setVisible(true);
 	}
 	
